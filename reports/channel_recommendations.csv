@@ -1,0 +1,8 @@
+channel,primary_recommendation,rationale,eligible_invest,eligible_trim,invest_score,trim_score,spend,last_touch_revenue,time_decay_revenue,time_decay_uplift,time_decay_uplift_pct,time_decay_roas
+google_search,invest,"under-credited by last-touch, strong time-decay ROAS, sufficient scale",True,False,0.4973,,203060.2,0.0,4214088.7561,4214088.7561,,20.7529
+review_sites,monitor,"under-credited by last-touch, strong time-decay ROAS, sufficient scale",True,False,0.3962,,116377.9,0.0,3419127.1168,3419127.1168,,29.3795
+retargeting,monitor,"over-credited by last-touch, strong time-decay ROAS, sufficient scale",False,False,,,104116.26,14562077.22,11065074.9233,-3497002.2967,-0.2401,106.2761
+email_nurture,monitor,"over-credited by last-touch, strong time-decay ROAS",False,False,,,29502.48,12122895.71,9948742.7506,-2174152.9594,-0.1793,337.2172
+webinar,monitor,"under-credited by last-touch, weaker time-decay efficiency, sufficient scale",False,False,,,563849.36,0.0,3845661.6304,3845661.6304,,6.8204
+linkedin_ads,monitor,"under-credited by last-touch, weaker time-decay efficiency",False,False,,,241516.33,0.0,1799344.3104,1799344.3104,,7.4502
+partner_referral,trim,"over-credited by last-touch, less efficient than other scaled paid channels, sufficient scale",False,True,,0.9866,549772.24,14275599.03,9633184.1087,-4642414.9213,-0.3252,17.5221

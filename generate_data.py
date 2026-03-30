@@ -1,45 +1,34 @@
-"""Generate synthetic multi-touch marketing attribution dataset."""
+"""CLI entry point for generating the synthetic B2B attribution dataset."""
 
-import csv
-import random
-from datetime import date, timedelta
+from __future__ import annotations
 
-random.seed(99)
+import argparse
+from pathlib import Path
+import sys
 
-CHANNELS = ["google_ads", "facebook_ads", "email", "organic_search", "referral", "direct"]
-CHANNEL_COST_PER_TOUCH = {"google_ads": 12, "facebook_ads": 8, "email": 1,
-                           "organic_search": 0, "referral": 5, "direct": 0}
-CONVERT_PROB = {"google_ads": 0.12, "facebook_ads": 0.08, "email": 0.18,
-                "organic_search": 0.15, "referral": 0.22, "direct": 0.20}
 
-rows = []
-for session_id in range(1, 5001):
-    user_id = random.randint(1, 2000)
-    n_touches = random.randint(1, 6)
-    session_date = date(2024, 1, 1) + timedelta(days=random.randint(0, 270))
-    touches = random.choices(CHANNELS, k=n_touches)
-    revenue = 0
-    converted = 0
-    last_channel = touches[-1]
-    if random.random() < CONVERT_PROB[last_channel]:
-        converted = 1
-        revenue = random.choice([49, 99, 149, 299, 499])
-    for position, channel in enumerate(touches):
-        rows.append({
-            "session_id": session_id,
-            "user_id": user_id,
-            "session_date": session_date.isoformat(),
-            "channel": channel,
-            "touch_position": position + 1,
-            "total_touches": n_touches,
-            "converted": converted,
-            "revenue": revenue,
-            "cost": CHANNEL_COST_PER_TOUCH[channel],
-        })
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT / "src"))
 
-with open("data/touchpoints.csv", "w", newline="") as fh:
-    writer = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
-    writer.writeheader()
-    writer.writerows(rows)
+from marketing_attribution.data_generation import DEFAULT_SEED, generate_touchpoint_dataset
 
-print(f"Generated {len(rows):,} touchpoints → data/touchpoints.csv")
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Generate the synthetic B2B attribution dataset.")
+    parser.add_argument("--seed", type=int, default=DEFAULT_SEED, help="Seed for deterministic dataset generation.")
+    parser.add_argument("--journeys", type=int, default=4500, help="Number of journeys to create.")
+    parser.add_argument(
+        "--output-path",
+        default=str(ROOT / "data" / "touchpoints.csv"),
+        help="CSV output path.",
+    )
+    return parser.parse_args()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    df = generate_touchpoint_dataset(args.output_path, journeys=args.journeys, seed=args.seed)
+    print(
+        f"Generated {len(df):,} touchpoints across {df['journey_id'].nunique():,} buying journeys "
+        f"-> {Path(args.output_path).resolve()}"
+    )

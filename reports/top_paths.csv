@@ -1,0 +1,11 @@
+path,journeys,revenue
+organic_search > google_search > retargeting,8,458136.74
+linkedin_ads > google_search > email_nurture,8,327905.05
+linkedin_ads > google_search > retargeting,7,210140.95
+linkedin_ads > google_search > partner_referral,6,585848.74
+organic_search > review_sites > retargeting,6,427377.96
+organic_search > google_search > direct,5,347983.8
+linkedin_ads > google_search > direct,5,242407.21
+organic_search > linkedin_ads > webinar > google_search > partner_referral > email_nurture > direct > retargeting,5,158429.74
+linkedin_ads > webinar > google_search > review_sites > partner_referral > email_nurture > retargeting > direct,5,79311.3
+linkedin_ads > google_search > webinar > email_nurture > retargeting,4,490647.03
